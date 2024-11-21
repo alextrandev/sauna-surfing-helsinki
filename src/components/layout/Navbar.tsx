@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -9,10 +9,22 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { useAuth } from "@/lib/auth";
-import { Droplets } from "lucide-react";
+import { Droplets, LogOut } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: "Signed out successfully",
+      description: "Come back soon!",
+    });
+    navigate("/");
+  };
 
   return (
     <nav className="w-full border-b bg-white/80 backdrop-blur-sm">
@@ -56,11 +68,23 @@ const Navbar = () => {
             )}
 
             {user && (
-              <NavigationMenuItem>
-                <Link to={`/dashboard/${user.role}`}>
-                  <Button variant="ghost">Dashboard</Button>
-                </Link>
-              </NavigationMenuItem>
+              <>
+                <NavigationMenuItem>
+                  <Link to={`/dashboard/${user.role}`}>
+                    <Button variant="ghost">Dashboard</Button>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Button
+                    variant="ghost"
+                    className="gap-2"
+                    onClick={handleSignOut}
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </Button>
+                </NavigationMenuItem>
+              </>
             )}
           </NavigationMenuList>
         </NavigationMenu>
