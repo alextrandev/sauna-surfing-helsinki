@@ -22,9 +22,9 @@ const Login = () => {
         if (event === "SIGNED_IN" && session?.user) {
           // Fetch the user's profile
           const { data: profile } = await supabase
-            .from("profiles")
-            .select("role")
-            .eq("id", session.user.id)
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
             .single();
 
           // Update local auth state

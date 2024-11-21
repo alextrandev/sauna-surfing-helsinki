@@ -1,12 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '@/integrations/supabase/client';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: "user" | "renter";
-}
+import type { User } from '@/types/auth';
 
 interface AuthState {
   user: User | null;
@@ -24,3 +18,23 @@ export const useAuth = create<AuthState>((set) => ({
     set({ user: null, isAuthenticated: false });
   },
 }));
+
+// Initialize auth state from session
+supabase.auth.getSession().then(({ data: { session } }) => {
+  if (session?.user) {
+    // Fetch user profile
+    supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .single()
+      .then(({ data: profile }) => {
+        useAuth.getState().setUser({
+          id: session.user.id,
+          email: session.user.email!,
+          name: session.user.user_metadata.username || session.user.email!.split("@")[0],
+          role: profile?.role || "user",
+        });
+      });
+  }
+});
