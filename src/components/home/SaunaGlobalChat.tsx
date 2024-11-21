@@ -17,7 +17,7 @@ const fetchMessages = async () => {
       message,
       type,
       created_at,
-      profiles (
+      profiles:user_id (
         username,
         avatar_url,
         experience
@@ -31,12 +31,12 @@ const fetchMessages = async () => {
   return data.map(msg => ({
     id: msg.id,
     message: msg.message,
-    type: msg.type as "chat" | "tip" | "request",
+    type: msg.type,
     timestamp: new Date(msg.created_at),
     user: {
-      name: msg.profiles?.username || 'Anonymous',
-      avatar: msg.profiles?.avatar_url || '',
-      experience: msg.profiles?.experience || 'Beginner'
+      name: msg.profiles.username,
+      avatar: msg.profiles.avatar_url,
+      experience: msg.profiles.experience
     }
   }));
 };
@@ -56,22 +56,11 @@ const SaunaGlobalChat = () => {
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
 
-    const session = await supabase.auth.getSession();
-    if (!session.data.session?.user) {
-      toast({
-        title: "Error",
-        description: "You must be logged in to send messages.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     const { error } = await supabase
       .from('messages')
       .insert({
         message: newMessage,
-        type: messageType,
-        user_id: session.data.session.user.id
+        type: messageType
       });
 
     if (error) {

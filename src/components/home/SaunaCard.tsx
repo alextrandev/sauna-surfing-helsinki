@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
 export interface Sauna {
-  id: string;
+  id: number;
   title: string;
   location: string;
   price: number;
@@ -19,7 +19,7 @@ export interface Sauna {
 
 interface SaunaCardProps {
   sauna: Sauna;
-  onClick: (id: string) => void;
+  onClick: (id: number) => void;
   index: number;
 }
 
