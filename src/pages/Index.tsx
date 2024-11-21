@@ -98,6 +98,10 @@ const Index = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  const handleSaunaClick = (saunaId: number) => {
+    navigate(`/sauna/${saunaId}`);
+  };
+
   return (
     <div className="min-h-screen pb-20">
       {/* Hero Section */}
@@ -175,7 +179,12 @@ const Index = () => {
         <h2 className="text-2xl font-semibold mb-6">Featured Saunas</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {saunas.map((sauna, index) => (
-            <Card key={sauna.id} className="overflow-hidden hover-scale animate-fade-up" style={{ animationDelay: `${0.1 * (index + 4)}s` }}>
+            <Card 
+              key={sauna.id} 
+              className="overflow-hidden hover-scale animate-fade-up cursor-pointer" 
+              style={{ animationDelay: `${0.1 * (index + 4)}s` }}
+              onClick={() => handleSaunaClick(sauna.id)}
+            >
               <div className="aspect-[4/3] relative">
                 <img
                   src={sauna.image}
