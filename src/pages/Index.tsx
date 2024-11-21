@@ -113,6 +113,10 @@ const Index = () => {
       
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1">
+            <h2 className="text-2xl font-semibold mb-6">Sauna Community</h2>
+            <SaunaGlobalChat />
+          </div>
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-semibold mb-6">Featured Saunas</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -125,10 +129,6 @@ const Index = () => {
                 />
               ))}
             </div>
-          </div>
-          <div className="lg:col-span-1">
-            <h2 className="text-2xl font-semibold mb-6">Sauna Community</h2>
-            <SaunaGlobalChat />
           </div>
         </div>
       </div>

@@ -73,6 +73,61 @@ const mockMessages: ChatMessage[] = [
     message: "Anyone up for a morning sauna session tomorrow at 7 AM?",
     type: "request",
     timestamp: new Date("2024-02-20T18:20:00"),
+  },
+  {
+    id: "6",
+    user: {
+      name: "Sofia R.",
+      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100",
+      experience: "Expert"
+    },
+    message: "Just finished an amazing session at the traditional smoke sauna. The löyly was perfect!",
+    type: "chat",
+    timestamp: new Date("2024-02-20T18:25:00"),
+  },
+  {
+    id: "7",
+    user: {
+      name: "Henrik L.",
+      avatar: "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=100",
+      experience: "Expert"
+    },
+    message: "Tip: Use birch whisks (vihta) to enhance blood circulation during your sauna session.",
+    type: "tip",
+    timestamp: new Date("2024-02-20T18:30:00"),
+  },
+  {
+    id: "8",
+    user: {
+      name: "Maria K.",
+      avatar: "https://images.unsplash.com/photo-1491349174775-aaafddd81942?w=100",
+      experience: "Intermediate"
+    },
+    message: "Looking for experienced sauna enthusiasts to share techniques and traditions!",
+    type: "request",
+    timestamp: new Date("2024-02-20T18:35:00"),
+  },
+  {
+    id: "9",
+    user: {
+      name: "Pekka T.",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100",
+      experience: "Expert"
+    },
+    message: "Just installed new stones in my home sauna. The heat retention is amazing now!",
+    type: "chat",
+    timestamp: new Date("2024-02-20T18:40:00"),
+  },
+  {
+    id: "10",
+    user: {
+      name: "Liisa M.",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
+      experience: "Expert"
+    },
+    message: "Tip: Start with a lower temperature and gradually increase it for a better experience.",
+    type: "tip",
+    timestamp: new Date("2024-02-20T18:45:00"),
   }
 ];
 
@@ -110,7 +165,7 @@ const SaunaGlobalChat = () => {
 
   return (
     <div className="space-y-4">
-      <Card className="glass">
+      <Card className="glass hover-scale">
         <CardContent className="p-4">
           <Tabs defaultValue="chat" className="mb-4">
             <TabsList className="grid w-full grid-cols-3">
@@ -119,8 +174,8 @@ const SaunaGlobalChat = () => {
               <TabsTrigger value="requests">Requests</TabsTrigger>
             </TabsList>
             {["chat", "tips", "requests"].map((tab) => (
-              <TabsContent key={tab} value={tab}>
-                <ScrollArea className="h-[400px] pr-4">
+              <TabsContent key={tab} value={tab} className="mt-4">
+                <ScrollArea className="h-[500px] pr-4">
                   <div className="space-y-4">
                     {messages
                       .filter(msg => 
