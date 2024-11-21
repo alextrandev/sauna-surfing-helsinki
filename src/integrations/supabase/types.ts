@@ -9,10 +9,43 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          type: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          type?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          type?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
           created_at: string
+          experience: string | null
           id: string
           role: string
           updated_at: string
@@ -21,6 +54,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          experience?: string | null
           id: string
           role?: string
           updated_at?: string
@@ -29,12 +63,147 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string
+          experience?: string | null
           id?: string
           role?: string
           updated_at?: string
           username?: string | null
         }
         Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          rating: number
+          sauna_id: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating: number
+          sauna_id: string
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating?: number
+          sauna_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_sauna_id_fkey"
+            columns: ["sauna_id"]
+            isOneToOne: false
+            referencedRelation: "saunas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sauna_buddies: {
+        Row: {
+          created_at: string
+          id: string
+          sauna_id: string
+          session_date: string
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          sauna_id: string
+          session_date: string
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          sauna_id?: string
+          session_date?: string
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sauna_buddies_sauna_id_fkey"
+            columns: ["sauna_id"]
+            isOneToOne: false
+            referencedRelation: "saunas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sauna_buddies_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saunas: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image: string | null
+          location: string
+          owner_id: string
+          price: number
+          rating: number | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          location: string
+          owner_id: string
+          price: number
+          rating?: number | null
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          location?: string
+          owner_id?: string
+          price?: number
+          rating?: number | null
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saunas_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
