@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
 import Categories from "@/components/home/Categories";
-import SaunaCard, { Sauna } from "@/components/home/SaunaCard";
+import SaunaCard from "@/components/home/SaunaCard";
 import SaunaGlobalChat from "@/components/home/SaunaGlobalChat";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -29,18 +29,25 @@ const Index = () => {
     queryFn: async () => {
       let query = supabase
         .from("saunas")
-        .select("*", { count: "exact" });
+        .select("*, sauna_buddies(id)", { count: "exact" });
 
       if (selectedCategory !== "All") {
         query = query.eq("type", selectedCategory);
       }
 
-      const { data, error, count } = await query
+      const { data: saunas, error, count } = await query
         .range((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE - 1)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      return { saunas: data || [], total: count || 0 };
+
+      return {
+        saunas: saunas.map(sauna => ({
+          ...sauna,
+          buddies: sauna.sauna_buddies?.length || 0
+        })),
+        total: count || 0
+      };
     },
   });
 
@@ -50,11 +57,6 @@ const Index = () => {
 
   const totalPages = Math.ceil((saunasData?.total || 0) / ITEMS_PER_PAGE);
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    setCurrentPage(1);
-  };
-
   return (
     <div className="min-h-screen pb-20">
       <Navbar />
@@ -63,7 +65,10 @@ const Index = () => {
       <div className="container mx-auto px-4">
         <Categories 
           selectedCategory={selectedCategory} 
-          onCategoryChange={handleCategoryChange}
+          onCategoryChange={category => {
+            setSelectedCategory(category);
+            setCurrentPage(1);
+          }}
         />
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
@@ -93,7 +98,7 @@ const Index = () => {
                         rating: Number(sauna.rating),
                         image: sauna.image || "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
                         type: sauna.type,
-                        buddies: 0, // You might want to fetch this from sauna_buddies table
+                        buddies: sauna.buddies,
                       }}
                       onClick={handleSaunaClick}
                       index={index}
