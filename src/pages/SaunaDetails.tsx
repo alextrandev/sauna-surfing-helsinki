@@ -1,8 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { Calendar } from "@/components/ui/calendar";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { MapPin, Clock, Star } from "lucide-react";
@@ -14,50 +11,50 @@ import { SaunaAmenities } from "@/components/sauna/SaunaAmenities";
 const saunas = [
   {
     id: "1",
-    title: "Traditional Wood-Burning Sauna",
+    title: "Traditional Smoke Sauna Experience",
     location: "Kallio, Helsinki",
-    price: 65,
+    price: 85,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&auto=format&fit=crop&q=60",
-    type: "Traditional",
-    description: "Experience authentic Finnish sauna culture in this traditional wood-burning sauna. Perfect for those seeking the genuine sauna experience.",
-    amenities: ["Wood-burning stove", "Shower facilities", "Changing room", "Towel service", "Relaxation area"],
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
+    type: "Smoke",
+    description: "Experience the authentic Finnish smoke sauna tradition in the heart of Helsinki. Our carefully maintained smoke sauna offers the deep, soft heat that true sauna enthusiasts cherish. Complete with a traditional wood-burning stove and genuine birch whisks.",
+    amenities: ["Smoke sauna", "Wood-burning stove", "Shower facilities", "Changing room", "Relaxation area", "Traditional whisks available"],
     availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"],
   },
   {
     id: "2",
-    title: "Modern Infrared Wellness Suite",
+    title: "Modern Urban Sauna & Lounge",
     location: "Töölö, Helsinki",
-    price: 85,
+    price: 75,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
-    type: "Infrared",
-    description: "A sleek and modern infrared sauna designed for relaxation and wellness.",
-    amenities: ["Infrared heaters", "Shower facilities", "Towel service"],
+    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&auto=format&fit=crop&q=60",
+    type: "Modern",
+    description: "A contemporary take on the Finnish sauna experience, featuring state-of-the-art facilities in a stylish urban setting. Perfect for those who appreciate modern comfort while enjoying traditional wellness practices.",
+    amenities: ["Electric sauna", "Modern lounge", "Premium shower products", "Towel service", "Refreshment bar"],
     availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00"],
   },
   {
     id: "3",
-    title: "Lakeside Smoke Sauna",
+    title: "Waterfront Wood-Burning Sauna",
     location: "Vuosaari, Helsinki",
     price: 95,
     rating: 5.0,
     image: "https://images.unsplash.com/photo-1543489822-c49534f3271f?w=800&auto=format&fit=crop&q=60",
-    type: "Smoke",
-    description: "Enjoy a traditional smoke sauna experience by the lakeside.",
-    amenities: ["Wood-burning stove", "Outdoor seating", "Shower facilities"],
+    type: "Traditional",
+    description: "Located by the sea, this traditional wood-burning sauna offers stunning views and the authentic Finnish sauna experience. Features include direct access to swimming in the sea and a spacious terrace for cooling down.",
+    amenities: ["Wood-burning stove", "Sea access", "Terrace", "Changing facilities", "Firewood included"],
     availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"],
   },
   {
     id: "4",
-    title: "Urban Rooftop Sauna Experience",
+    title: "Luxury Wellness Sauna Suite",
     location: "Kamppi, Helsinki",
-    price: 75,
+    price: 120,
     rating: 4.7,
     image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Modern",
-    description: "A unique rooftop sauna with a view, perfect for urban relaxation.",
-    amenities: ["Rooftop access", "Shower facilities", "Changing room"],
+    description: "A premium wellness experience combining traditional Finnish sauna with modern luxury. Features include both electric and infrared saunas, plus a private relaxation lounge.",
+    amenities: ["Dual sauna types", "Private lounge", "Premium amenities", "Massage booking available", "Refreshments included"],
     availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00"],
   }
 ];

@@ -8,75 +8,75 @@ import SaunaCard, { Sauna } from "@/components/home/SaunaCard";
 const saunas: Sauna[] = [
   {
     id: 1,
-    title: "Traditional Wood-Burning Sauna",
+    title: "Traditional Smoke Sauna Experience",
     location: "Kallio, Helsinki",
-    price: 65,
+    price: 85,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&auto=format&fit=crop&q=60",
-    type: "Traditional"
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
+    type: "Smoke"
   },
   {
     id: 2,
-    title: "Modern Infrared Wellness Suite",
+    title: "Modern Urban Sauna & Lounge",
     location: "Töölö, Helsinki",
-    price: 85,
+    price: 75,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
-    type: "Infrared"
+    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&auto=format&fit=crop&q=60",
+    type: "Modern"
   },
   {
     id: 3,
-    title: "Lakeside Smoke Sauna",
+    title: "Waterfront Wood-Burning Sauna",
     location: "Vuosaari, Helsinki",
     price: 95,
     rating: 5.0,
     image: "https://images.unsplash.com/photo-1543489822-c49534f3271f?w=800&auto=format&fit=crop&q=60",
-    type: "Smoke"
+    type: "Traditional"
   },
   {
     id: 4,
-    title: "Urban Rooftop Sauna Experience",
+    title: "Luxury Wellness Sauna Suite",
     location: "Kamppi, Helsinki",
-    price: 75,
+    price: 120,
     rating: 4.7,
     image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Modern"
   },
   {
     id: 5,
-    title: "Historic Stone Sauna",
+    title: "Historic Public Sauna",
     location: "Kruununhaka, Helsinki",
-    price: 120,
+    price: 65,
     rating: 4.9,
     image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
     type: "Traditional"
   },
   {
     id: 6,
-    title: "Seaside Wellness Sauna",
-    location: "Herttoniemi, Helsinki",
+    title: "Eco-Friendly Forest Sauna",
+    location: "Keskuspuisto, Helsinki",
     price: 90,
     rating: 4.6,
     image: "https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=800&auto=format&fit=crop&q=60",
-    type: "Modern"
-  },
-  {
-    id: 7,
-    title: "Forest View Smoke Sauna",
-    location: "Keskuspuisto, Helsinki",
-    price: 110,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1581316452165-6fe0b6a2a9c0?w=800&auto=format&fit=crop&q=60",
     type: "Smoke"
   },
   {
+    id: 7,
+    title: "Rooftop Panorama Sauna",
+    location: "Kalasatama, Helsinki",
+    price: 110,
+    rating: 4.8,
+    image: "https://images.unsplash.com/photo-1581316452165-6fe0b6a2a9c0?w=800&auto=format&fit=crop&q=60",
+    type: "Modern"
+  },
+  {
     id: 8,
-    title: "Eco-Friendly Infrared Suite",
-    location: "Pasila, Helsinki",
+    title: "Traditional Neighborhood Sauna",
+    location: "Vallila, Helsinki",
     price: 70,
     rating: 4.5,
     image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
-    type: "Infrared"
+    type: "Traditional"
   }
 ];
 
