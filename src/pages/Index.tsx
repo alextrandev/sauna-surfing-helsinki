@@ -12,7 +12,7 @@ const saunas: Sauna[] = [
     location: "Kallio, Helsinki",
     price: 85,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Smoke",
     buddies: 3,
     nextSession: "Today at 18:00"
@@ -23,7 +23,7 @@ const saunas: Sauna[] = [
     location: "Töölö, Helsinki",
     price: 75,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Modern",
     buddies: 2,
     nextSession: "Tomorrow at 16:00"
@@ -34,7 +34,7 @@ const saunas: Sauna[] = [
     location: "Vuosaari, Helsinki",
     price: 95,
     rating: 5.0,
-    image: "https://images.unsplash.com/photo-1543489822-c49534f3271f?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Traditional",
     buddies: 4,
     nextSession: "Today at 20:00"
@@ -56,7 +56,7 @@ const saunas: Sauna[] = [
     location: "Kruununhaka, Helsinki",
     price: 65,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Traditional",
     buddies: 0,
     nextSession: null
@@ -67,7 +67,7 @@ const saunas: Sauna[] = [
     location: "Keskuspuisto, Helsinki",
     price: 90,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Smoke",
     buddies: 5,
     nextSession: "Today at 19:00"
@@ -78,7 +78,7 @@ const saunas: Sauna[] = [
     location: "Kalasatama, Helsinki",
     price: 110,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1581316452165-6fe0b6a2a9c0?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Modern",
     buddies: 2,
     nextSession: "Tomorrow at 15:00"
@@ -89,7 +89,7 @@ const saunas: Sauna[] = [
     location: "Vallila, Helsinki",
     price: 70,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Traditional",
     buddies: 1,
     nextSession: null
