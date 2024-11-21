@@ -52,6 +52,42 @@ const saunas: Sauna[] = [
     rating: 4.7,
     image: "https://images.unsplash.com/photo-1515696955266-4f67e13219e8?w=800&auto=format&fit=crop&q=60",
     type: "Modern"
+  },
+  {
+    id: 5,
+    title: "Historic Stone Sauna",
+    location: "Kruununhaka, Helsinki",
+    price: 120,
+    rating: 4.9,
+    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    type: "Traditional"
+  },
+  {
+    id: 6,
+    title: "Seaside Wellness Sauna",
+    location: "Herttoniemi, Helsinki",
+    price: 90,
+    rating: 4.6,
+    image: "https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=800&auto=format&fit=crop&q=60",
+    type: "Modern"
+  },
+  {
+    id: 7,
+    title: "Forest View Smoke Sauna",
+    location: "Keskuspuisto, Helsinki",
+    price: 110,
+    rating: 4.8,
+    image: "https://images.unsplash.com/photo-1581316452165-6fe0b6a2a9c0?w=800&auto=format&fit=crop&q=60",
+    type: "Smoke"
+  },
+  {
+    id: 8,
+    title: "Eco-Friendly Infrared Suite",
+    location: "Pasila, Helsinki",
+    price: 70,
+    rating: 4.5,
+    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    type: "Infrared"
   }
 ];
 
