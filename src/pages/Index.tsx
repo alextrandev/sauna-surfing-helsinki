@@ -30,40 +30,43 @@ const Index = () => {
     queryKey: ["saunas", selectedCategory, currentPage],
     queryFn: async () => {
       try {
-        let query = supabase
-          .from("saunas")
-          .select(`
-            *,
-            sauna_buddies:sauna_buddies(count)
-          `, { count: "exact" });
+        // First, get the saunas with basic information
+        let query = supabase.from("saunas").select("*", { count: "exact" });
 
         if (selectedCategory !== "All") {
           query = query.eq("type", selectedCategory);
         }
 
-        const { data, error, count } = await query
+        const { data: saunas, error: saunasError, count } = await query
           .range((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE - 1)
           .order("created_at", { ascending: false });
 
-        if (error) {
-          throw error;
-        }
+        if (saunasError) throw saunasError;
+        if (!saunas) return { saunas: [], total: 0 };
 
-        if (!data) {
-          return { saunas: [], total: 0 };
-        }
+        // Then, for each sauna, get the buddy count
+        const saunasWithBuddies = await Promise.all(
+          saunas.map(async (sauna) => {
+            const { count: buddyCount } = await supabase
+              .from("sauna_buddies")
+              .select("*", { count: "exact" })
+              .eq("sauna_id", sauna.id);
+
+            return {
+              id: sauna.id,
+              title: sauna.title,
+              location: sauna.location,
+              price: Number(sauna.price),
+              rating: Number(sauna.rating || 5),
+              image: sauna.image || "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+              type: sauna.type,
+              buddies: buddyCount || 0
+            };
+          })
+        );
 
         return {
-          saunas: data.map(sauna => ({
-            id: sauna.id,
-            title: sauna.title,
-            location: sauna.location,
-            price: Number(sauna.price),
-            rating: Number(sauna.rating || 5),
-            image: sauna.image || "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
-            type: sauna.type,
-            buddies: (sauna.sauna_buddies?.[0]?.count as number) || 0
-          })),
+          saunas: saunasWithBuddies,
           total: count || 0
         };
       } catch (error) {
