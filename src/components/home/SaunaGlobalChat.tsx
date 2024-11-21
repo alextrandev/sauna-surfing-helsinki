@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
-import { MessageSquare, Users, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChatMessage } from "./chat/ChatMessage";
+import { MessageInput } from "./chat/MessageInput";
 
 interface ChatMessage {
   id: string;
@@ -43,6 +41,39 @@ const mockMessages: ChatMessage[] = [
     type: "tip",
     timestamp: new Date("2024-02-20T18:05:00"),
   },
+  {
+    id: "3",
+    user: {
+      name: "Mikko H.",
+      avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100",
+      experience: "Expert"
+    },
+    message: "Looking for sauna buddies this weekend at my traditional smoke sauna!",
+    type: "request",
+    timestamp: new Date("2024-02-20T18:10:00"),
+  },
+  {
+    id: "4",
+    user: {
+      name: "Anna S.",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+      experience: "Expert"
+    },
+    message: "Tip: Hydration is key! Drink plenty of water before and after your sauna session.",
+    type: "tip",
+    timestamp: new Date("2024-02-20T18:15:00"),
+  },
+  {
+    id: "5",
+    user: {
+      name: "Juha P.",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+      experience: "Intermediate"
+    },
+    message: "Anyone up for a morning sauna session tomorrow at 7 AM?",
+    type: "request",
+    timestamp: new Date("2024-02-20T18:20:00"),
+  }
 ];
 
 const SaunaGlobalChat = () => {
@@ -77,17 +108,6 @@ const SaunaGlobalChat = () => {
     });
   };
 
-  const getMessageIcon = (type: string) => {
-    switch (type) {
-      case "request":
-        return <Users className="w-4 h-4 text-blue-500" />;
-      case "tip":
-        return <Info className="w-4 h-4 text-green-500" />;
-      default:
-        return <MessageSquare className="w-4 h-4 text-gray-500" />;
-    }
-  };
-
   return (
     <div className="space-y-4">
       <Card className="glass">
@@ -98,111 +118,31 @@ const SaunaGlobalChat = () => {
               <TabsTrigger value="tips">Tips</TabsTrigger>
               <TabsTrigger value="requests">Requests</TabsTrigger>
             </TabsList>
-            <TabsContent value="chat">
-              <ScrollArea className="h-[400px] pr-4">
-                <div className="space-y-4">
-                  {messages.filter(msg => msg.type === "chat").map((msg) => (
-                    <div key={msg.id} className="flex gap-3">
-                      <Avatar>
-                        <AvatarImage src={msg.user.avatar} alt={msg.user.name} />
-                        <AvatarFallback>{msg.user.name.slice(0, 2)}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{msg.user.name}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {msg.timestamp.toLocaleTimeString()}
-                          </span>
-                        </div>
-                        <p className="text-sm mt-1">{msg.message}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </ScrollArea>
-            </TabsContent>
-            <TabsContent value="tips">
-              <ScrollArea className="h-[400px] pr-4">
-                <div className="space-y-4">
-                  {messages.filter(msg => msg.type === "tip").map((msg) => (
-                    <div key={msg.id} className="flex gap-3">
-                      <Avatar>
-                        <AvatarImage src={msg.user.avatar} alt={msg.user.name} />
-                        <AvatarFallback>{msg.user.name.slice(0, 2)}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{msg.user.name}</span>
-                          <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">
-                            {msg.user.experience}
-                          </span>
-                        </div>
-                        <p className="text-sm mt-1 bg-green-50 p-2 rounded-md">
-                          {getMessageIcon("tip")} {msg.message}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </ScrollArea>
-            </TabsContent>
-            <TabsContent value="requests">
-              <ScrollArea className="h-[400px] pr-4">
-                <div className="space-y-4">
-                  {messages.filter(msg => msg.type === "request").map((msg) => (
-                    <div key={msg.id} className="flex gap-3">
-                      <Avatar>
-                        <AvatarImage src={msg.user.avatar} alt={msg.user.name} />
-                        <AvatarFallback>{msg.user.name.slice(0, 2)}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{msg.user.name}</span>
-                          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">
-                            Looking for buddies
-                          </span>
-                        </div>
-                        <p className="text-sm mt-1 bg-blue-50 p-2 rounded-md">
-                          {getMessageIcon("request")} {msg.message}
-                        </p>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="mt-2"
-                          onClick={() => toast({
-                            title: "Request sent!",
-                            description: "We'll notify you when they respond.",
-                          })}
-                        >
-                          Join Session
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </ScrollArea>
-            </TabsContent>
+            {["chat", "tips", "requests"].map((tab) => (
+              <TabsContent key={tab} value={tab}>
+                <ScrollArea className="h-[400px] pr-4">
+                  <div className="space-y-4">
+                    {messages
+                      .filter(msg => 
+                        tab === "chat" ? msg.type === "chat" :
+                        tab === "tips" ? msg.type === "tip" :
+                        msg.type === "request"
+                      )
+                      .map((msg) => (
+                        <ChatMessage key={msg.id} message={msg} />
+                      ))}
+                  </div>
+                </ScrollArea>
+              </TabsContent>
+            ))}
           </Tabs>
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <Input
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type your message..."
-                onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-              />
-            </div>
-            <select 
-              className="px-3 py-2 border rounded-md"
-              value={messageType}
-              onChange={(e) => setMessageType(e.target.value as "chat" | "tip" | "request")}
-            >
-              <option value="chat">Chat</option>
-              <option value="tip">Tip</option>
-              <option value="request">Request</option>
-            </select>
-            <Button onClick={handleSendMessage}>Send</Button>
-          </div>
+          <MessageInput
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
+            handleSendMessage={handleSendMessage}
+          />
         </CardContent>
       </Card>
     </div>
