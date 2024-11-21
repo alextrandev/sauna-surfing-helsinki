@@ -4,11 +4,16 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
+import type { UserRole } from "@/types/auth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Login = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const isValidRole = (role: string): role is UserRole => {
+    return role === "user" || role === "renter";
+  };
 
   useEffect(() => {
     // Redirect if user is already logged in
@@ -27,16 +32,18 @@ const Login = () => {
             .eq('id', session.user.id)
             .single();
 
+          const role = profile?.role && isValidRole(profile.role) ? profile.role : "user";
+
           // Update local auth state
           useAuth.getState().setUser({
             id: session.user.id,
             email: session.user.email!,
             name: session.user.user_metadata.username || session.user.email!.split("@")[0],
-            role: profile?.role || "user",
+            role,
           });
 
           // Redirect to dashboard
-          navigate(`/dashboard/${profile?.role || "user"}`);
+          navigate(`/dashboard/${role}`);
         }
       }
     );
