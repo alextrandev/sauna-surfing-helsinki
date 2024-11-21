@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Search, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/lib/auth";
 
 interface Sauna {
   id: number;
@@ -93,6 +95,8 @@ const saunas: Sauna[] = [
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen pb-20">
@@ -105,6 +109,24 @@ const Index = () => {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/40" />
+        </div>
+        
+        <div className="absolute top-4 right-4 z-20">
+          {user ? (
+            <Button
+              onClick={() => navigate(`/dashboard/${user.role}`)}
+              className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
+            >
+              Dashboard
+            </Button>
+          ) : (
+            <Button
+              onClick={() => navigate("/login")}
+              className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
+            >
+              Login
+            </Button>
+          )}
         </div>
         
         <div className="relative z-10 container mx-auto px-4 text-center">
