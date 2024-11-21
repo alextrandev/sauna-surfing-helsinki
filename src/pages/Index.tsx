@@ -15,6 +15,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useToast } from "@/hooks/use-toast";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -23,31 +24,57 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const { data: saunasData, isLoading } = useQuery({
     queryKey: ["saunas", selectedCategory, currentPage],
     queryFn: async () => {
-      let query = supabase
-        .from("saunas")
-        .select("*, sauna_buddies(id)", { count: "exact" });
+      try {
+        let query = supabase
+          .from("saunas")
+          .select(`
+            *,
+            sauna_buddies:sauna_buddies(count)
+          `, { count: "exact" });
 
-      if (selectedCategory !== "All") {
-        query = query.eq("type", selectedCategory);
+        if (selectedCategory !== "All") {
+          query = query.eq("type", selectedCategory);
+        }
+
+        const { data, error, count } = await query
+          .range((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE - 1)
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+
+        if (!data) {
+          return { saunas: [], total: 0 };
+        }
+
+        return {
+          saunas: data.map(sauna => ({
+            id: sauna.id,
+            title: sauna.title,
+            location: sauna.location,
+            price: Number(sauna.price),
+            rating: Number(sauna.rating || 5),
+            image: sauna.image || "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+            type: sauna.type,
+            buddies: (sauna.sauna_buddies?.[0]?.count as number) || 0
+          })),
+          total: count || 0
+        };
+      } catch (error) {
+        console.error("Error fetching saunas:", error);
+        toast({
+          variant: "destructive",
+          title: "Error fetching saunas",
+          description: "Please try again later.",
+        });
+        return { saunas: [], total: 0 };
       }
-
-      const { data: saunas, error, count } = await query
-        .range((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE - 1)
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-
-      return {
-        saunas: saunas.map(sauna => ({
-          ...sauna,
-          buddies: sauna.sauna_buddies?.length || 0
-        })),
-        total: count || 0
-      };
     },
   });
 
@@ -90,16 +117,7 @@ const Index = () => {
                   {saunasData?.saunas.map((sauna, index) => (
                     <SaunaCard
                       key={sauna.id}
-                      sauna={{
-                        id: sauna.id,
-                        title: sauna.title,
-                        location: sauna.location,
-                        price: Number(sauna.price),
-                        rating: Number(sauna.rating),
-                        image: sauna.image || "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
-                        type: sauna.type,
-                        buddies: sauna.buddies,
-                      }}
+                      sauna={sauna}
                       onClick={handleSaunaClick}
                       index={index}
                     />
