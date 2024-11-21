@@ -6,6 +6,8 @@ import { MapPin, Clock, Star } from "lucide-react";
 import { SaunaReviews } from "@/components/sauna/SaunaReviews";
 import { SaunaBookingForm } from "@/components/sauna/SaunaBookingForm";
 import { SaunaAmenities } from "@/components/sauna/SaunaAmenities";
+import { SaunaBuddies } from "@/components/sauna/SaunaBuddies";
+import { SaunaChatroom } from "@/components/sauna/SaunaChatroom";
 import { useToast } from "@/hooks/use-toast";
 
 // Mock data - in a real app, this would come from an API
@@ -109,6 +111,13 @@ const SaunaDetails = () => {
             
             <SaunaAmenities amenities={sauna.amenities} />
             
+            <Separator />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <SaunaBuddies />
+              <SaunaChatroom />
+            </div>
+
             <Separator />
             
             <SaunaReviews saunaId={sauna.id} />
