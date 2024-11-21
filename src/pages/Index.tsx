@@ -30,51 +30,58 @@ const Index = () => {
     queryKey: ["saunas", selectedCategory, currentPage],
     queryFn: async () => {
       try {
-        // First, get the saunas with basic information
-        let query = supabase.from("saunas").select("*", { count: "exact" });
+        // Fetch saunas with a count of active buddies in a single query
+        let query = supabase
+          .from('saunas')
+          .select(`
+            *,
+            buddies:sauna_buddies(count)
+          `, { count: 'exact' });
 
         if (selectedCategory !== "All") {
           query = query.eq("type", selectedCategory);
         }
 
-        const { data: saunas, error: saunasError, count } = await query
+        const { data: saunas, error, count } = await query
           .range((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE - 1)
-          .order("created_at", { ascending: false });
+          .order('created_at', { ascending: false });
 
-        if (saunasError) throw saunasError;
-        if (!saunas) return { saunas: [], total: 0 };
+        if (error) {
+          console.error("Error fetching saunas:", error);
+          toast({
+            variant: "destructive",
+            title: "Error loading saunas",
+            description: "Please try refreshing the page.",
+          });
+          return { saunas: [], total: 0 };
+        }
 
-        // Then, for each sauna, get the buddy count
-        const saunasWithBuddies = await Promise.all(
-          saunas.map(async (sauna) => {
-            const { count: buddyCount } = await supabase
-              .from("sauna_buddies")
-              .select("*", { count: "exact" })
-              .eq("sauna_id", sauna.id);
+        if (!saunas) {
+          return { saunas: [], total: 0 };
+        }
 
-            return {
-              id: sauna.id,
-              title: sauna.title,
-              location: sauna.location,
-              price: Number(sauna.price),
-              rating: Number(sauna.rating || 5),
-              image: sauna.image || "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
-              type: sauna.type,
-              buddies: buddyCount || 0
-            };
-          })
-        );
+        // Transform the data into the expected format
+        const transformedSaunas = saunas.map((sauna) => ({
+          id: sauna.id,
+          title: sauna.title,
+          location: sauna.location,
+          price: Number(sauna.price),
+          rating: Number(sauna.rating || 5),
+          image: sauna.image || "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+          type: sauna.type,
+          buddies: (sauna.buddies?.[0]?.count as number) || 0
+        }));
 
         return {
-          saunas: saunasWithBuddies,
+          saunas: transformedSaunas,
           total: count || 0
         };
       } catch (error) {
-        console.error("Error fetching saunas:", error);
+        console.error("Error in sauna query:", error);
         toast({
           variant: "destructive",
-          title: "Error fetching saunas",
-          description: "Please try again later.",
+          title: "Error loading saunas",
+          description: "Please try refreshing the page.",
         });
         return { saunas: [], total: 0 };
       }
