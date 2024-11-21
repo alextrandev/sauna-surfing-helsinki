@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SaunaDetails from "./pages/SaunaDetails";
+import SaunaBuddyFinder from "./pages/SaunaBuddyFinder";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/dashboard/user" element={<Dashboard />} />
           <Route path="/dashboard/renter" element={<Dashboard />} />
           <Route path="/sauna/:id" element={<SaunaDetails />} />
+          <Route path="/find-buddy" element={<SaunaBuddyFinder />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
