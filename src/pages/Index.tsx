@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
 import Categories from "@/components/home/Categories";
 import SaunaCard, { Sauna } from "@/components/home/SaunaCard";
+import SaunaGlobalChat from "@/components/home/SaunaGlobalChat";
 
 const saunas: Sauna[] = [
   {
@@ -23,7 +24,7 @@ const saunas: Sauna[] = [
     location: "Töölö, Helsinki",
     price: 75,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1515844008311-d5c3326e3bb9?w=800&auto=format&fit=crop&q=60",
     type: "Modern",
     buddies: 2,
     nextSession: "Tomorrow at 16:00"
@@ -34,7 +35,7 @@ const saunas: Sauna[] = [
     location: "Vuosaari, Helsinki",
     price: 95,
     rating: 5.0,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1543838732-ce620422ce6f?w=800&auto=format&fit=crop&q=60",
     type: "Traditional",
     buddies: 4,
     nextSession: "Today at 20:00"
@@ -45,7 +46,7 @@ const saunas: Sauna[] = [
     location: "Kamppi, Helsinki",
     price: 120,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1584184924103-e310d9dc82fc?w=800&auto=format&fit=crop&q=60",
     type: "Modern",
     buddies: 1,
     nextSession: "Tomorrow at 14:00"
@@ -56,7 +57,7 @@ const saunas: Sauna[] = [
     location: "Kruununhaka, Helsinki",
     price: 65,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=800&auto=format&fit=crop&q=60",
     type: "Traditional",
     buddies: 0,
     nextSession: null
@@ -67,7 +68,7 @@ const saunas: Sauna[] = [
     location: "Keskuspuisto, Helsinki",
     price: 90,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1504346466600-714572c4b726?w=800&auto=format&fit=crop&q=60",
     type: "Smoke",
     buddies: 5,
     nextSession: "Today at 19:00"
@@ -78,7 +79,7 @@ const saunas: Sauna[] = [
     location: "Kalasatama, Helsinki",
     price: 110,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1523538290088-51d3f4cf2781?w=800&auto=format&fit=crop&q=60",
     type: "Modern",
     buddies: 2,
     nextSession: "Tomorrow at 15:00"
@@ -89,7 +90,7 @@ const saunas: Sauna[] = [
     location: "Vallila, Helsinki",
     price: 70,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=800&auto=format&fit=crop&q=60",
     type: "Traditional",
     buddies: 1,
     nextSession: null
@@ -110,19 +111,27 @@ const Index = () => {
       <Hero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <Categories />
       
-      <section className="container mx-auto px-4">
-        <h2 className="text-2xl font-semibold mb-6">Featured Saunas</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {saunas.map((sauna, index) => (
-            <SaunaCard
-              key={sauna.id}
-              sauna={sauna}
-              onClick={handleSaunaClick}
-              index={index}
-            />
-          ))}
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-semibold mb-6">Featured Saunas</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {saunas.map((sauna, index) => (
+                <SaunaCard
+                  key={sauna.id}
+                  sauna={sauna}
+                  onClick={handleSaunaClick}
+                  index={index}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="lg:col-span-1">
+            <h2 className="text-2xl font-semibold mb-6">Sauna Community</h2>
+            <SaunaGlobalChat />
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
