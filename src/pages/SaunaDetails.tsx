@@ -6,6 +6,7 @@ import { MapPin, Clock, Star } from "lucide-react";
 import { SaunaReviews } from "@/components/sauna/SaunaReviews";
 import { SaunaBookingForm } from "@/components/sauna/SaunaBookingForm";
 import { SaunaAmenities } from "@/components/sauna/SaunaAmenities";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock data - in a real app, this would come from an API
 const saunas = [

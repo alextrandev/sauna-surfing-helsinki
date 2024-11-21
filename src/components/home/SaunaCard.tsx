@@ -1,7 +1,9 @@
-import { MapPin } from "lucide-react";
+import { MapPin, Users } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export interface Sauna {
   id: number;
@@ -11,6 +13,8 @@ export interface Sauna {
   rating: number;
   image: string;
   type: string;
+  buddies: number;
+  nextSession?: string;
 }
 
 interface SaunaCardProps {
@@ -20,6 +24,16 @@ interface SaunaCardProps {
 }
 
 const SaunaCard = ({ sauna, onClick, index }: SaunaCardProps) => {
+  const { toast } = useToast();
+
+  const handleJoinBuddies = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toast({
+      title: "Joined sauna group!",
+      description: `You've joined the group for ${sauna.title}. We'll notify you when the session is confirmed.`,
+    });
+  };
+
   return (
     <Card 
       className="overflow-hidden hover-scale animate-fade-up cursor-pointer" 
@@ -32,6 +46,12 @@ const SaunaCard = ({ sauna, onClick, index }: SaunaCardProps) => {
           alt={sauna.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
+        {sauna.buddies > 0 && (
+          <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full backdrop-blur-sm flex items-center gap-1">
+            <Users className="w-4 h-4" />
+            <span className="text-sm">{sauna.buddies}</span>
+          </div>
+        )}
       </div>
       <div className="p-4">
         <div className="flex items-start justify-between mb-2">
@@ -51,6 +71,20 @@ const SaunaCard = ({ sauna, onClick, index }: SaunaCardProps) => {
           <span className="font-semibold">{sauna.price}€</span>
           <span className="text-sm text-muted-foreground">per hour</span>
         </div>
+        {sauna.nextSession && (
+          <div className="mt-2 text-sm text-muted-foreground">
+            Next session: {sauna.nextSession}
+          </div>
+        )}
+        {sauna.buddies > 0 && (
+          <Button 
+            variant="secondary" 
+            className="w-full mt-3"
+            onClick={handleJoinBuddies}
+          >
+            Join {sauna.buddies} buddies
+          </Button>
+        )}
       </div>
     </Card>
   );
