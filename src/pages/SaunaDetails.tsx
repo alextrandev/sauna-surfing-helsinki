@@ -11,6 +11,7 @@ import { SaunaChatroom } from "@/components/sauna/SaunaChatroom";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { BackButton } from "@/components/ui/back-button";
 
 const SaunaDetails = () => {
   const { id } = useParams();
@@ -66,8 +67,8 @@ const SaunaDetails = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto p-4 md:p-8">
+        <BackButton />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             <div className="relative h-[400px] rounded-lg overflow-hidden">
               <img

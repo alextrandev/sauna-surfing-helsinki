@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { MapPin, Calendar, Users } from "lucide-react";
+import { BackButton } from "@/components/ui/back-button";
 
 interface SaunaBuddy {
   id: number;
@@ -66,6 +67,7 @@ const SaunaBuddyFinder = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
+        <BackButton />
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-4">Find a Sauna Buddy</h1>
           <p className="text-muted-foreground mb-6">

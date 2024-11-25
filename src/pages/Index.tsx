@@ -4,7 +4,7 @@ import SaunaGlobalChat from "@/components/home/SaunaGlobalChat";
 import SearchBar from "@/components/home/SearchBar";
 import CategorySlider from "@/components/home/CategorySlider";
 import SaunaList from "@/components/home/SaunaList";
-import { saunas } from "@/data/saunas"; // We'll move the saunas data to a separate file
+import { saunas } from "@/data/saunas";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,7 +18,6 @@ const Index = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <h2 className="text-2xl font-semibold mb-6">Featured Saunas</h2>
             <SaunaList saunas={saunas} searchQuery={searchQuery} />
           </div>
           

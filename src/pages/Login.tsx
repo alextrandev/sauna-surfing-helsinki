@@ -7,6 +7,7 @@ import { useAuth } from "@/lib/auth";
 import type { UserRole } from "@/types/auth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { BackButton } from "@/components/ui/back-button";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -67,35 +68,38 @@ const Login = () => {
   }, [navigate, user, toast]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Welcome to Sauna Surfing</CardTitle>
-          <CardDescription>
-            Sign in to your account or create a new one
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Auth
-            supabaseClient={supabase}
-            appearance={{
-              theme: ThemeSupa,
-              variables: {
-                default: {
-                  colors: {
-                    brand: '#ef4444',
-                    brandAccent: '#dc2626',
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md">
+        <BackButton />
+        <Card>
+          <CardHeader>
+            <CardTitle>Welcome to Sauna Surfing</CardTitle>
+            <CardDescription>
+              Sign in to your account or create a new one
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Auth
+              supabaseClient={supabase}
+              appearance={{
+                theme: ThemeSupa,
+                variables: {
+                  default: {
+                    colors: {
+                      brand: '#ef4444',
+                      brandAccent: '#dc2626',
+                    },
                   },
                 },
-              },
-            }}
-            providers={["google", "github"]}
-            redirectTo={`${window.location.origin}/auth/callback`}
-            onlyThirdPartyProviders={false}
-            view="sign_in"
-          />
-        </CardContent>
-      </Card>
+              }}
+              providers={["google", "github"]}
+              redirectTo={`${window.location.origin}/auth/callback`}
+              onlyThirdPartyProviders={false}
+              view="sign_in"
+            />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
