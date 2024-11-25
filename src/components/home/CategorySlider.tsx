@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import * as Icons from "lucide-react";
 import { useRef } from "react";
 import { categories } from "./Categories";
 
@@ -22,15 +23,19 @@ const CategorySlider = () => {
         ref={scrollContainerRef}
         className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 scroll-smooth"
       >
-        {categories.map((category) => (
-          <Button
-            key={category.value}
-            variant="outline"
-            className="flex-shrink-0 rounded-full gap-2"
-          >
-            {category.label}
-          </Button>
-        ))}
+        {categories.map((category) => {
+          const IconComponent = Icons[category.icon as keyof typeof Icons];
+          return (
+            <Button
+              key={category.value}
+              variant="outline"
+              className="flex-shrink-0 rounded-full gap-2"
+            >
+              {IconComponent && <IconComponent className="w-4 h-4" />}
+              {category.label}
+            </Button>
+          );
+        })}
       </div>
       
       <Button
