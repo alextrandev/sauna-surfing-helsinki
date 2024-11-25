@@ -1,21 +1,20 @@
-import { Button } from "@/components/ui/button";
+export const categories = [
+  {
+    label: "All",
+    value: "all",
+  },
+  {
+    label: "Smoke",
+    value: "smoke",
+  },
+  {
+    label: "Modern",
+    value: "modern",
+  },
+  {
+    label: "Traditional",
+    value: "traditional",
+  },
+] as const;
 
-const Categories = () => {
-  return (
-    <section className="container mx-auto px-4 py-12">
-      <div className="flex gap-4 overflow-x-auto pb-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-        {["All", "Traditional", "Smoke", "Infrared", "Modern"].map((category) => (
-          <Button
-            key={category}
-            variant={category === "All" ? "default" : "outline"}
-            className="rounded-full whitespace-nowrap"
-          >
-            {category}
-          </Button>
-        ))}
-      </div>
-    </section>
-  );
-};
-
-export default Categories;
+export type Category = (typeof categories)[number]["value"];
