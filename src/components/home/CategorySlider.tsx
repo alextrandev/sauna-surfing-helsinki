@@ -1,22 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
-
-const categories = [
-  { id: "cabins", label: "Cabins", icon: "🏡" },
-  { id: "icons", label: "Icons", icon: "🎫" },
-  { id: "lakefront", label: "Lakefront", icon: "🌊" },
-  { id: "amazing-views", label: "Amazing views", icon: "🏔️" },
-  { id: "mansions", label: "Mansions", icon: "🏰" },
-  { id: "tiny-homes", label: "Tiny homes", icon: "🏠" },
-  { id: "omg", label: "OMG!", icon: "👽" },
-  { id: "castles", label: "Castles", icon: "🏰" },
-  { id: "beachfront", label: "Beachfront", icon: "🏖️" },
-  { id: "luxe", label: "Luxe", icon: "✨" },
-  { id: "tropical", label: "Tropical", icon: "🌴" },
-  { id: "countryside", label: "Countryside", icon: "🌾" },
-  { id: "amazing-pools", label: "Amazing pools", icon: "🏊‍♂️" },
-];
+import { categories } from "./Categories";
 
 const CategorySlider = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -39,11 +24,10 @@ const CategorySlider = () => {
       >
         {categories.map((category) => (
           <Button
-            key={category.id}
+            key={category.value}
             variant="outline"
             className="flex-shrink-0 rounded-full gap-2"
           >
-            <span>{category.icon}</span>
             {category.label}
           </Button>
         ))}
