@@ -61,7 +61,7 @@ const fetchMessages = async () => {
 
 const dummyMessages: ChatMessageType[] = [
   {
-    id: "1",
+    id: "dummy-1",
     message: "Hey everyone! How's the sauna today?",
     type: "chat",
     timestamp: new Date("2024-02-20T10:00:00"),
@@ -72,7 +72,7 @@ const dummyMessages: ChatMessageType[] = [
     }
   },
   {
-    id: "2",
+    id: "dummy-2",
     message: "Remember to stay hydrated during your sauna sessions!",
     type: "tip",
     timestamp: new Date("2024-02-20T10:05:00"),
@@ -83,7 +83,7 @@ const dummyMessages: ChatMessageType[] = [
     }
   },
   {
-    id: "3",
+    id: "dummy-3",
     message: "Looking for a sauna buddy this evening at Helsinki Sauna Club",
     type: "request",
     timestamp: new Date("2024-02-20T10:10:00"),
@@ -94,7 +94,7 @@ const dummyMessages: ChatMessageType[] = [
     }
   },
   {
-    id: "4",
+    id: "dummy-4",
     message: "The optimal temperature for a traditional Finnish sauna is between 80-100°C",
     type: "tip",
     timestamp: new Date("2024-02-20T10:15:00"),
@@ -105,7 +105,7 @@ const dummyMessages: ChatMessageType[] = [
     }
   },
   {
-    id: "5",
+    id: "dummy-5",
     message: "Anyone interested in a morning sauna session tomorrow?",
     type: "request",
     timestamp: new Date("2024-02-20T10:20:00"),
@@ -124,12 +124,14 @@ const SaunaGlobalChat = () => {
   const queryClient = useQueryClient();
   const { user, isAuthenticated } = useAuth();
 
-  const { data: messages = [] } = useQuery({
+  const { data: realMessages = [] } = useQuery({
     queryKey: ['messages'],
     queryFn: fetchMessages,
-    refetchInterval: 5000,
-    initialData: dummyMessages
+    refetchInterval: 5000
   });
+
+  // Combine real and dummy messages
+  const allMessages = [...realMessages, ...dummyMessages];
 
   const handleSendMessage = async () => {
     if (!newMessage.trim()) {
@@ -194,12 +196,13 @@ const SaunaGlobalChat = () => {
             <TabsContent key={tab} value={tab} className="m-0">
               <ScrollArea className="h-[500px] p-4">
                 <div className="space-y-4">
-                  {messages
+                  {allMessages
                     .filter(msg => 
                       tab === "chat" ? msg.type === "chat" :
                       tab === "tips" ? msg.type === "tip" :
                       msg.type === "request"
                     )
+                    .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
                     .map((msg) => (
                       <ChatMessage key={msg.id} message={msg} />
                     ))}
