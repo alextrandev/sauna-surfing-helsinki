@@ -9,118 +9,50 @@ import { SaunaAmenities } from "@/components/sauna/SaunaAmenities";
 import { SaunaBuddies } from "@/components/sauna/SaunaBuddies";
 import { SaunaChatroom } from "@/components/sauna/SaunaChatroom";
 import { useToast } from "@/hooks/use-toast";
-
-// Mock data - in a real app, this would come from an API
-const saunas = [
-  {
-    id: "1",
-    title: "Traditional Smoke Sauna Experience",
-    location: "Kallio, Helsinki",
-    price: 85,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=800",
-    type: "Smoke",
-    description: "Experience the authentic Finnish smoke sauna tradition in the heart of Helsinki. Our carefully maintained smoke sauna offers the deep, soft heat that true sauna enthusiasts cherish. Complete with a traditional wood-burning stove and genuine birch whisks.",
-    amenities: ["Smoke sauna", "Wood-burning stove", "Shower facilities", "Changing room", "Relaxation area", "Traditional whisks available"],
-    availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"],
-  },
-  {
-    id: "2",
-    title: "Modern Urban Sauna & Lounge",
-    location: "Töölö, Helsinki",
-    price: 75,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1584184087638-d0aacd23d370?w=800&auto=format&fit=crop&q=60",
-    type: "Modern",
-    description: "A contemporary take on the Finnish sauna experience, featuring state-of-the-art facilities in a stylish urban setting. Perfect for those who appreciate modern comfort while enjoying traditional wellness practices.",
-    amenities: ["Electric sauna", "Modern lounge", "Premium shower products", "Towel service", "Refreshment bar"],
-    availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00"],
-  },
-  {
-    id: "3",
-    title: "Waterfront Wood-Burning Sauna",
-    location: "Vuosaari, Helsinki",
-    price: 95,
-    rating: 5.0,
-    image: "https://images.unsplash.com/photo-1584184087638-d0aacd23d370?w=800&auto=format&fit=crop&q=60",
-    type: "Traditional",
-    description: "Located by the sea, this traditional wood-burning sauna offers stunning views and the authentic Finnish sauna experience. Features include direct access to swimming in the sea and a spacious terrace for cooling down.",
-    amenities: ["Wood-burning stove", "Sea access", "Terrace", "Changing facilities", "Firewood included"],
-    availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"],
-  },
-  {
-    id: "4",
-    title: "Luxury Wellness Sauna Suite",
-    location: "Kamppi, Helsinki",
-    price: 120,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1584184087638-d0aacd23d370?w=800&auto=format&fit=crop&q=60",
-    type: "Modern",
-    description: "A premium wellness experience combining traditional Finnish sauna with modern luxury. Features include both electric and infrared saunas, plus a private relaxation lounge.",
-    amenities: ["Dual sauna types", "Private lounge", "Premium amenities", "Massage booking available", "Refreshments included"],
-    availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00"],
-  },
-  {
-    id: "5",
-    title: "Historic Public Sauna",
-    location: "Kruununhaka, Helsinki",
-    price: 65,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800",
-    type: "Traditional",
-    description: "A historic public sauna that has been serving the community for generations. Experience the authentic Finnish sauna culture in a traditional setting.",
-    amenities: ["Traditional sauna", "Historic building", "Community atmosphere", "Basic amenities", "Central location"],
-    availableTimeSlots: ["12:00", "14:00", "16:00", "18:00", "20:00"],
-  },
-  {
-    id: "6",
-    title: "Eco-Friendly Forest Sauna",
-    location: "Keskuspuisto, Helsinki",
-    price: 90,
-    rating: 4.6,
-    image: "https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?w=800",
-    type: "Smoke",
-    description: "An environmentally conscious sauna experience surrounded by nature. Solar-powered facilities and sustainable practices make this a truly eco-friendly choice.",
-    amenities: ["Eco-friendly", "Forest location", "Solar power", "Natural materials", "Hiking trails nearby"],
-    availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00"],
-  },
-  {
-    id: "7",
-    title: "Rooftop Panorama Sauna",
-    location: "Kalasatama, Helsinki",
-    price: 110,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42f?w=800",
-    type: "Modern",
-    description: "Enjoy stunning city views from this modern rooftop sauna. Perfect for those who want to combine the traditional sauna experience with urban luxury.",
-    amenities: ["Panoramic views", "Modern facilities", "Rooftop terrace", "Premium amenities", "Evening sessions available"],
-    availableTimeSlots: ["14:00", "16:00", "18:00", "20:00", "22:00"],
-  },
-  {
-    id: "8",
-    title: "Traditional Neighborhood Sauna",
-    location: "Vallila, Helsinki",
-    price: 70,
-    rating: 4.5,
-    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800",
-    type: "Traditional",
-    description: "A cozy neighborhood sauna that offers an authentic Finnish experience. Perfect for those who want to experience local sauna culture.",
-    amenities: ["Traditional sauna", "Local atmosphere", "Basic amenities", "Family-friendly", "Affordable"],
-    availableTimeSlots: ["12:00", "14:00", "16:00", "18:00", "20:00"],
-  }
-];
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const SaunaDetails = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  
-  // Convert numeric id to string for comparison
-  const sauna = saunas.find(s => s.id === (id ? String(id) : id));
-  
+
+  const { data: sauna, isLoading } = useQuery({
+    queryKey: ['sauna', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('saunas')
+        .select(`
+          *,
+          owner:profiles(username)
+        `)
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  if (isLoading) {
+    return <div className="container mx-auto p-8">Loading...</div>;
+  }
+
   if (!sauna) {
     return <div className="container mx-auto p-8">Sauna not found</div>;
   }
+
+  // Mock data for available time slots - in a real app, this would come from the backend
+  const availableTimeSlots = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
+
+  // Mock amenities - in a real app, this would be part of the sauna data
+  const amenities = [
+    "Wood-burning stove",
+    "Shower facilities",
+    "Changing room",
+    "Relaxation area",
+    "Traditional whisks available"
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -158,7 +90,7 @@ const SaunaDetails = () => {
 
             <Separator />
             
-            <SaunaAmenities amenities={sauna.amenities} />
+            <SaunaAmenities amenities={amenities} />
             
             <Separator />
             
@@ -181,7 +113,10 @@ const SaunaDetails = () => {
               </div>
               
               <SaunaBookingForm
-                sauna={sauna}
+                sauna={{
+                  id: sauna.id,
+                  availableTimeSlots
+                }}
                 selectedDate={selectedDate}
                 onDateSelect={setSelectedDate}
               />
