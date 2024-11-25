@@ -27,14 +27,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full border-b bg-white/80 backdrop-blur-sm">
+    <nav className="w-full border-b bg-white/80 backdrop-blur-sm relative z-50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-bold text-xl">
           <img src="/sauna-surf-logo.svg" alt="Sauna Surfing Logo" className="w-8 h-8" />
           <span className="text-sauna-ember">Sauna Surfing</span>
         </Link>
 
-        <NavigationMenu>
+        <NavigationMenu className="relative z-50">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link to="/find-buddy">
