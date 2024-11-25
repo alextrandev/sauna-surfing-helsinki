@@ -41,7 +41,9 @@ const fetchMessages = async () => {
 
   if (error) throw error;
 
-  return (data as MessageResponse[]).map(msg => ({
+  const typedData = data as unknown as MessageResponse[];
+  
+  return typedData.map(msg => ({
     id: msg.id,
     message: msg.message,
     type: msg.type as "chat" | "tip" | "request",
