@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
-import Hero from "@/components/home/Hero";
-import Categories from "@/components/home/Categories";
 import SaunaCard, { Sauna } from "@/components/home/SaunaCard";
 import SaunaGlobalChat from "@/components/home/SaunaGlobalChat";
+import SearchBar from "@/components/home/SearchBar";
+import CategorySlider from "@/components/home/CategorySlider";
 import { 
   Pagination, 
   PaginationContent, 
@@ -168,15 +168,11 @@ const Index = () => {
   return (
     <div className="min-h-screen pb-20">
       <Navbar />
-      <Hero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <Categories />
-      
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 pt-8">
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <CategorySlider />
+        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1">
-            <h2 className="text-2xl font-semibold mb-6">Sauna Community</h2>
-            <SaunaGlobalChat />
-          </div>
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-semibold mb-6">Featured Saunas</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -218,6 +214,11 @@ const Index = () => {
                 </PaginationContent>
               </Pagination>
             </div>
+          </div>
+          
+          <div className="lg:col-span-1">
+            <h2 className="text-2xl font-semibold mb-6">Sauna Community</h2>
+            <SaunaGlobalChat />
           </div>
         </div>
       </div>
