@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Sauna } from "./SaunaCard";
 import SaunaCard from "./SaunaCard";
 import { 
@@ -19,6 +20,7 @@ const ITEMS_PER_PAGE = 6;
 
 const SaunaList = ({ saunas, searchQuery }: SaunaListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   // Filter saunas based on search query
   const filteredSaunas = saunas.filter((sauna) =>
@@ -32,6 +34,10 @@ const SaunaList = ({ saunas, searchQuery }: SaunaListProps) => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedSaunas = filteredSaunas.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
+  const handleSaunaClick = (id: number) => {
+    navigate(`/sauna/${id}`);
+  };
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -39,7 +45,7 @@ const SaunaList = ({ saunas, searchQuery }: SaunaListProps) => {
           <SaunaCard
             key={sauna.id}
             sauna={sauna}
-            onClick={() => {}}
+            onClick={handleSaunaClick}
             index={index}
           />
         ))}
