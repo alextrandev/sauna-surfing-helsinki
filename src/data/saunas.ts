@@ -2,7 +2,7 @@ import { Sauna } from "@/components/home/SaunaCard";
 
 export const saunas: Sauna[] = [
   {
-    id: 1,
+    id: "550e8400-e29b-41d4-a716-446655440000",
     title: "Traditional Smoke Sauna Experience",
     location: "Kallio, Helsinki",
     price: 85,
@@ -13,7 +13,7 @@ export const saunas: Sauna[] = [
     nextSession: "Today at 18:00"
   },
   {
-    id: 2,
+    id: "550e8400-e29b-41d4-a716-446655440001",
     title: "Modern Urban Sauna & Lounge",
     location: "Töölö, Helsinki",
     price: 75,
@@ -24,7 +24,7 @@ export const saunas: Sauna[] = [
     nextSession: "Tomorrow at 16:00"
   },
   {
-    id: 3,
+    id: "550e8400-e29b-41d4-a716-446655440002",
     title: "Waterfront Wood-Burning Sauna",
     location: "Vuosaari, Helsinki",
     price: 95,
@@ -35,7 +35,7 @@ export const saunas: Sauna[] = [
     nextSession: "Today at 20:00"
   },
   {
-    id: 4,
+    id: "550e8400-e29b-41d4-a716-446655440003",
     title: "Luxury Wellness Sauna Suite",
     location: "Kamppi, Helsinki",
     price: 120,
@@ -46,7 +46,7 @@ export const saunas: Sauna[] = [
     nextSession: "Tomorrow at 14:00"
   },
   {
-    id: 5,
+    id: "550e8400-e29b-41d4-a716-446655440004",
     title: "Historic Public Sauna",
     location: "Kruununhaka, Helsinki",
     price: 65,
@@ -57,7 +57,7 @@ export const saunas: Sauna[] = [
     nextSession: null
   },
   {
-    id: 6,
+    id: "550e8400-e29b-41d4-a716-446655440005",
     title: "Eco-Friendly Forest Sauna",
     location: "Keskuspuisto, Helsinki",
     price: 90,
@@ -68,7 +68,7 @@ export const saunas: Sauna[] = [
     nextSession: "Today at 19:00"
   },
   {
-    id: 7,
+    id: "550e8400-e29b-41d4-a716-446655440006",
     title: "Rooftop Panorama Sauna",
     location: "Kalasatama, Helsinki",
     price: 110,
@@ -79,7 +79,7 @@ export const saunas: Sauna[] = [
     nextSession: "Tomorrow at 15:00"
   },
   {
-    id: 8,
+    id: "550e8400-e29b-41d4-a716-446655440007",
     title: "Traditional Neighborhood Sauna",
     location: "Vallila, Helsinki",
     price: 70,
@@ -90,7 +90,7 @@ export const saunas: Sauna[] = [
     nextSession: null
   },
   {
-    id: 9,
+    id: "550e8400-e29b-41d4-a716-446655440008",
     title: "Seaside Sauna Retreat",
     location: "Lauttasaari, Helsinki",
     price: 95,
@@ -101,7 +101,7 @@ export const saunas: Sauna[] = [
     nextSession: "Tomorrow at 12:00"
   },
   {
-    id: 10,
+    id: "550e8400-e29b-41d4-a716-446655440009",
     title: "Urban Wellness Hub",
     location: "Pasila, Helsinki",
     price: 85,
@@ -112,7 +112,7 @@ export const saunas: Sauna[] = [
     nextSession: "Today at 17:00"
   },
   {
-    id: 11,
+    id: "550e8400-e29b-41d4-a716-446655440010",
     title: "Forest View Sauna",
     location: "Espoo Central Park",
     price: 100,
@@ -123,7 +123,7 @@ export const saunas: Sauna[] = [
     nextSession: "Tomorrow at 19:00"
   },
   {
-    id: 12,
+    id: "550e8400-e29b-41d4-a716-446655440011",
     title: "Design District Sauna",
     location: "Design District, Helsinki",
     price: 115,
