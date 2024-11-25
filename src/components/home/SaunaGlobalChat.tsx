@@ -8,6 +8,7 @@ import { MessageInput } from "./chat/MessageInput";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/lib/auth";
+import type { ChatMessage as ChatMessageType } from "@/types/chat";
 
 interface MessageResponse {
   id: string;
@@ -38,11 +39,14 @@ const fetchMessages = async () => {
     .order('created_at', { ascending: false })
     .limit(50);
 
-  if (error) throw error;
+  if (error) {
+    console.error('Error fetching messages:', error);
+    throw error;
+  }
 
-  const typedData = data as unknown as MessageResponse[];
-  
-  return typedData.map(msg => ({
+  if (!data) return [];
+
+  return (data as MessageResponse[]).map(msg => ({
     id: msg.id,
     message: msg.message,
     type: msg.type as "chat" | "tip" | "request",
@@ -50,7 +54,7 @@ const fetchMessages = async () => {
     user: {
       name: msg.profiles?.username || 'Anonymous',
       avatar: msg.profiles?.avatar_url || '',
-      experience: msg.profiles?.experience
+      experience: msg.profiles?.experience || 'Beginner'
     }
   }));
 };
@@ -87,33 +91,42 @@ const SaunaGlobalChat = () => {
       return;
     }
 
-    const { error } = await supabase
-      .from('messages')
-      .insert({
-        message: newMessage.trim(),
-        type: messageType,
-        user_id: user.id
-      });
+    try {
+      const { error } = await supabase
+        .from('messages')
+        .insert({
+          message: newMessage.trim(),
+          type: messageType,
+          user_id: user.id
+        });
 
-    if (error) {
+      if (error) {
+        console.error('Error sending message:', error);
+        toast({
+          title: "Error",
+          description: "Failed to send message. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      setNewMessage("");
+      queryClient.invalidateQueries({ queryKey: ['messages'] });
+      
+      toast({
+        title: "Message sent",
+        description: messageType === "request" 
+          ? "Your sauna buddy request has been sent!" 
+          : "Your message has been sent to the community.",
+      });
+    } catch (error) {
       console.error('Error sending message:', error);
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive"
       });
-      return;
     }
-
-    setNewMessage("");
-    queryClient.invalidateQueries({ queryKey: ['messages'] });
-    
-    toast({
-      title: "Message sent",
-      description: messageType === "request" 
-        ? "Your sauna buddy request has been sent!" 
-        : "Your message has been sent to the community.",
-    });
   };
 
   return (
