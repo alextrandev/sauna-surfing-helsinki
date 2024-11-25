@@ -19,7 +19,7 @@ interface MessageResponse {
     username: string | null;
     avatar_url: string | null;
     experience: string | null;
-  } | null;
+  };
 }
 
 const fetchMessages = async () => {
@@ -30,7 +30,7 @@ const fetchMessages = async () => {
       message,
       type,
       created_at,
-      profiles:user_id (
+      profiles (
         username,
         avatar_url,
         experience
@@ -46,7 +46,7 @@ const fetchMessages = async () => {
 
   if (!data) return [];
 
-  return (data as MessageResponse[]).map(msg => ({
+  return data.map((msg: MessageResponse) => ({
     id: msg.id,
     message: msg.message,
     type: msg.type as "chat" | "tip" | "request",
