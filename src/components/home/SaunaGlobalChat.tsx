@@ -36,7 +36,7 @@ const fetchMessages = async () => {
         experience
       )
     `)
-    .order('created_at', { ascending: false })
+    .order('created_at', { ascending: true })
     .limit(50);
 
   if (error) {
@@ -69,7 +69,8 @@ const SaunaGlobalChat = () => {
   const { data: messages = [] } = useQuery({
     queryKey: ['messages'],
     queryFn: fetchMessages,
-    refetchInterval: 5000
+    refetchInterval: 5000,
+    initialData: []
   });
 
   const handleSendMessage = async () => {
@@ -100,15 +101,7 @@ const SaunaGlobalChat = () => {
           user_id: user.id
         });
 
-      if (error) {
-        console.error('Error sending message:', error);
-        toast({
-          title: "Error",
-          description: "Failed to send message. Please try again.",
-          variant: "destructive"
-        });
-        return;
-      }
+      if (error) throw error;
 
       setNewMessage("");
       queryClient.invalidateQueries({ queryKey: ['messages'] });
@@ -141,8 +134,8 @@ const SaunaGlobalChat = () => {
           
           {["chat", "tips", "requests"].map((tab) => (
             <TabsContent key={tab} value={tab} className="m-0">
-              <ScrollArea className="h-[500px]">
-                <div className="space-y-1">
+              <ScrollArea className="h-[500px] p-4">
+                <div className="space-y-4">
                   {messages
                     .filter(msg => 
                       tab === "chat" ? msg.type === "chat" :
