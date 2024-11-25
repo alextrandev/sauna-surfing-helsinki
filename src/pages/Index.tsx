@@ -13,7 +13,7 @@ const saunas: Sauna[] = [
     location: "Kallio, Helsinki",
     price: 85,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=800",
     type: "Smoke",
     buddies: 3,
     nextSession: "Today at 18:00"
@@ -24,7 +24,7 @@ const saunas: Sauna[] = [
     location: "Töölö, Helsinki",
     price: 75,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1515844008311-d5c3326e3bb9?w=800",
+    image: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=800",
     type: "Modern",
     buddies: 2,
     nextSession: "Tomorrow at 16:00"
@@ -35,7 +35,7 @@ const saunas: Sauna[] = [
     location: "Vuosaari, Helsinki",
     price: 95,
     rating: 5.0,
-    image: "https://images.unsplash.com/photo-1543838732-ce620422ce6f?w=800",
+    image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=800",
     type: "Traditional",
     buddies: 4,
     nextSession: "Today at 20:00"
@@ -46,7 +46,7 @@ const saunas: Sauna[] = [
     location: "Kamppi, Helsinki",
     price: 120,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1584184924103-e310d9dc82fc?w=800",
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800",
     type: "Modern",
     buddies: 1,
     nextSession: "Tomorrow at 14:00"
@@ -57,7 +57,7 @@ const saunas: Sauna[] = [
     location: "Kruununhaka, Helsinki",
     price: 65,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1602763288580-988c16459561?w=800",
+    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800",
     type: "Traditional",
     buddies: 0,
     nextSession: null
@@ -68,7 +68,7 @@ const saunas: Sauna[] = [
     location: "Keskuspuisto, Helsinki",
     price: 90,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1507484467459-0c01be16726e?w=800",
+    image: "https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?w=800",
     type: "Smoke",
     buddies: 5,
     nextSession: "Today at 19:00"
@@ -79,7 +79,7 @@ const saunas: Sauna[] = [
     location: "Kalasatama, Helsinki",
     price: 110,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=800",
+    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42f?w=800",
     type: "Modern",
     buddies: 2,
     nextSession: "Tomorrow at 15:00"
@@ -90,7 +90,7 @@ const saunas: Sauna[] = [
     location: "Vallila, Helsinki",
     price: 70,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1588502257869-c8e4f39ff985?w=800",
+    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800",
     type: "Traditional",
     buddies: 1,
     nextSession: null
