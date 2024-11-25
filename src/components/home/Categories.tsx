@@ -7,7 +7,7 @@ export const categories = [
   {
     label: "Smoke",
     value: "smoke",
-    icon: "fire"
+    icon: "flame"
   },
   {
     label: "Modern",
@@ -22,12 +22,12 @@ export const categories = [
   {
     label: "Pool",
     value: "pool",
-    icon: "pool"
+    icon: "droplets"
   },
   {
     label: "Nature",
     value: "nature",
-    icon: "tree"
+    icon: "trees"
   },
   {
     label: "Waterfront",

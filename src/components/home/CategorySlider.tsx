@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Sun, Fire, Home, TreePine, Pool, Tree, Waves, Music } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sun, Flame, Home, TreePine, Droplets, Trees, Waves, Music } from "lucide-react";
 import { useRef } from "react";
 import { categories } from "./Categories";
 
 const iconMap = {
   sun: Sun,
-  fire: Fire,
+  flame: Flame,
   house: Home,
   wooden: TreePine,
-  pool: Pool,
-  tree: Tree,
+  droplets: Droplets,
+  trees: Trees,
   water: Waves,
   "music-note": Music
 };
