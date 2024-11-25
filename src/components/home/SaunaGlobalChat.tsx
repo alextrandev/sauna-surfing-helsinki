@@ -10,6 +10,18 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/lib/auth";
 
+interface MessageResponse {
+  id: string;
+  message: string;
+  type: string;
+  created_at: string;
+  profiles: {
+    username: string | null;
+    avatar_url: string | null;
+    experience: string | null;
+  } | null;
+}
+
 const fetchMessages = async () => {
   const { data, error } = await supabase
     .from('messages')
@@ -29,7 +41,7 @@ const fetchMessages = async () => {
 
   if (error) throw error;
 
-  return data.map(msg => ({
+  return (data as MessageResponse[]).map(msg => ({
     id: msg.id,
     message: msg.message,
     type: msg.type as "chat" | "tip" | "request",
