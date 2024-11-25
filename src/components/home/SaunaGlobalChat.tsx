@@ -5,7 +5,6 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChatMessage } from "./chat/ChatMessage";
 import { MessageInput } from "./chat/MessageInput";
-import type { ChatMessage as ChatMessageType } from "@/types/chat";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/lib/auth";
@@ -61,7 +60,7 @@ const SaunaGlobalChat = () => {
   const [messageType, setMessageType] = useState<"chat" | "tip" | "request">("chat");
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   const { data: messages = [] } = useQuery({
     queryKey: ['messages'],
@@ -70,10 +69,19 @@ const SaunaGlobalChat = () => {
   });
 
   const handleSendMessage = async () => {
-    if (!newMessage.trim() || !user) {
+    if (!newMessage.trim()) {
       toast({
         title: "Error",
-        description: !user ? "Please login to send messages" : "Message cannot be empty",
+        description: "Message cannot be empty",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!isAuthenticated || !user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to send messages",
         variant: "destructive"
       });
       return;
@@ -82,12 +90,13 @@ const SaunaGlobalChat = () => {
     const { error } = await supabase
       .from('messages')
       .insert({
-        message: newMessage,
+        message: newMessage.trim(),
         type: messageType,
         user_id: user.id
       });
 
     if (error) {
+      console.error('Error sending message:', error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",
