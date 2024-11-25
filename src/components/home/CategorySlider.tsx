@@ -1,8 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import * as Icons from "lucide-react";
+import { ChevronLeft, ChevronRight, Sun, Fire, Home, TreePine, Pool, Tree, Waves, Music } from "lucide-react";
 import { useRef } from "react";
 import { categories } from "./Categories";
+
+const iconMap = {
+  sun: Sun,
+  fire: Fire,
+  house: Home,
+  wooden: TreePine,
+  pool: Pool,
+  tree: Tree,
+  water: Waves,
+  "music-note": Music
+};
 
 const CategorySlider = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -24,14 +34,14 @@ const CategorySlider = () => {
         className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 scroll-smooth"
       >
         {categories.map((category) => {
-          const IconComponent = Icons[category.icon as keyof typeof Icons];
+          const Icon = iconMap[category.icon as keyof typeof iconMap];
           return (
             <Button
               key={category.value}
               variant="outline"
               className="flex-shrink-0 rounded-full gap-2"
             >
-              {IconComponent && <IconComponent className="w-4 h-4" />}
+              {Icon && <Icon className="w-4 h-4" />}
               {category.label}
             </Button>
           );
