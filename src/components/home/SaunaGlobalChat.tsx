@@ -8,6 +8,7 @@ import { MessageInput } from "./chat/MessageInput";
 import type { ChatMessage as ChatMessageType } from "@/types/chat";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/lib/auth";
 
 const fetchMessages = async () => {
   const { data, error } = await supabase
@@ -31,12 +32,12 @@ const fetchMessages = async () => {
   return data.map(msg => ({
     id: msg.id,
     message: msg.message,
-    type: msg.type,
+    type: msg.type as "chat" | "tip" | "request",
     timestamp: new Date(msg.created_at),
     user: {
-      name: msg.profiles.username,
-      avatar: msg.profiles.avatar_url,
-      experience: msg.profiles.experience
+      name: msg.profiles?.username || 'Anonymous',
+      avatar: msg.profiles?.avatar_url || '',
+      experience: msg.profiles?.experience
     }
   }));
 };
@@ -46,6 +47,7 @@ const SaunaGlobalChat = () => {
   const [messageType, setMessageType] = useState<"chat" | "tip" | "request">("chat");
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { user } = useAuth();
 
   const { data: messages = [] } = useQuery({
     queryKey: ['messages'],
@@ -54,13 +56,21 @@ const SaunaGlobalChat = () => {
   });
 
   const handleSendMessage = async () => {
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() || !user) {
+      toast({
+        title: "Error",
+        description: !user ? "Please login to send messages" : "Message cannot be empty",
+        variant: "destructive"
+      });
+      return;
+    }
 
     const { error } = await supabase
       .from('messages')
       .insert({
         message: newMessage,
-        type: messageType
+        type: messageType,
+        user_id: user.id
       });
 
     if (error) {
