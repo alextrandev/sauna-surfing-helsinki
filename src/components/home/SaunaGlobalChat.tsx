@@ -8,6 +8,7 @@ import { MessageInput } from "./chat/MessageInput";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/lib/auth";
+import { allDummyMessages } from "@/data/dummyMessages";
 import type { ChatMessage as ChatMessageType } from "@/types/chat";
 
 interface MessageResponse {
@@ -59,64 +60,6 @@ const fetchMessages = async () => {
   }));
 };
 
-const dummyMessages: ChatMessageType[] = [
-  {
-    id: "dummy-1",
-    message: "Hey everyone! How's the sauna today?",
-    type: "chat",
-    timestamp: new Date("2024-02-20T10:00:00"),
-    user: {
-      name: "SaunaLover",
-      avatar: "",
-      experience: "Expert"
-    }
-  },
-  {
-    id: "dummy-2",
-    message: "Remember to stay hydrated during your sauna sessions!",
-    type: "tip",
-    timestamp: new Date("2024-02-20T10:05:00"),
-    user: {
-      name: "WellnessGuru",
-      avatar: "",
-      experience: "Expert"
-    }
-  },
-  {
-    id: "dummy-3",
-    message: "Looking for a sauna buddy this evening at Helsinki Sauna Club",
-    type: "request",
-    timestamp: new Date("2024-02-20T10:10:00"),
-    user: {
-      name: "SaunaNewbie",
-      avatar: "",
-      experience: "Beginner"
-    }
-  },
-  {
-    id: "dummy-4",
-    message: "The optimal temperature for a traditional Finnish sauna is between 80-100°C",
-    type: "tip",
-    timestamp: new Date("2024-02-20T10:15:00"),
-    user: {
-      name: "SaunaMaster",
-      avatar: "",
-      experience: "Expert"
-    }
-  },
-  {
-    id: "dummy-5",
-    message: "Anyone interested in a morning sauna session tomorrow?",
-    type: "request",
-    timestamp: new Date("2024-02-20T10:20:00"),
-    user: {
-      name: "EarlySaunabird",
-      avatar: "",
-      experience: "Intermediate"
-    }
-  }
-];
-
 const SaunaGlobalChat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [messageType, setMessageType] = useState<"chat" | "tip" | "request">("chat");
@@ -131,7 +74,7 @@ const SaunaGlobalChat = () => {
   });
 
   // Combine real and dummy messages
-  const allMessages = [...realMessages, ...dummyMessages];
+  const allMessages = [...realMessages, ...allDummyMessages];
 
   const handleSendMessage = async () => {
     if (!newMessage.trim()) {
