@@ -18,7 +18,7 @@ const saunas = [
     location: "Kallio, Helsinki",
     price: 85,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1584184087638-d0aacd23d370?w=800&auto=format&fit=crop&q=60",
+    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=800",
     type: "Smoke",
     description: "Experience the authentic Finnish smoke sauna tradition in the heart of Helsinki. Our carefully maintained smoke sauna offers the deep, soft heat that true sauna enthusiasts cherish. Complete with a traditional wood-burning stove and genuine birch whisks.",
     amenities: ["Smoke sauna", "Wood-burning stove", "Shower facilities", "Changing room", "Relaxation area", "Traditional whisks available"],
@@ -59,6 +59,54 @@ const saunas = [
     description: "A premium wellness experience combining traditional Finnish sauna with modern luxury. Features include both electric and infrared saunas, plus a private relaxation lounge.",
     amenities: ["Dual sauna types", "Private lounge", "Premium amenities", "Massage booking available", "Refreshments included"],
     availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00"],
+  },
+  {
+    id: "5",
+    title: "Historic Public Sauna",
+    location: "Kruununhaka, Helsinki",
+    price: 65,
+    rating: 4.9,
+    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800",
+    type: "Traditional",
+    description: "A historic public sauna that has been serving the community for generations. Experience the authentic Finnish sauna culture in a traditional setting.",
+    amenities: ["Traditional sauna", "Historic building", "Community atmosphere", "Basic amenities", "Central location"],
+    availableTimeSlots: ["12:00", "14:00", "16:00", "18:00", "20:00"],
+  },
+  {
+    id: "6",
+    title: "Eco-Friendly Forest Sauna",
+    location: "Keskuspuisto, Helsinki",
+    price: 90,
+    rating: 4.6,
+    image: "https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?w=800",
+    type: "Smoke",
+    description: "An environmentally conscious sauna experience surrounded by nature. Solar-powered facilities and sustainable practices make this a truly eco-friendly choice.",
+    amenities: ["Eco-friendly", "Forest location", "Solar power", "Natural materials", "Hiking trails nearby"],
+    availableTimeSlots: ["10:00", "12:00", "14:00", "16:00", "18:00"],
+  },
+  {
+    id: "7",
+    title: "Rooftop Panorama Sauna",
+    location: "Kalasatama, Helsinki",
+    price: 110,
+    rating: 4.8,
+    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42f?w=800",
+    type: "Modern",
+    description: "Enjoy stunning city views from this modern rooftop sauna. Perfect for those who want to combine the traditional sauna experience with urban luxury.",
+    amenities: ["Panoramic views", "Modern facilities", "Rooftop terrace", "Premium amenities", "Evening sessions available"],
+    availableTimeSlots: ["14:00", "16:00", "18:00", "20:00", "22:00"],
+  },
+  {
+    id: "8",
+    title: "Traditional Neighborhood Sauna",
+    location: "Vallila, Helsinki",
+    price: 70,
+    rating: 4.5,
+    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800",
+    type: "Traditional",
+    description: "A cozy neighborhood sauna that offers an authentic Finnish experience. Perfect for those who want to experience local sauna culture.",
+    amenities: ["Traditional sauna", "Local atmosphere", "Basic amenities", "Family-friendly", "Affordable"],
+    availableTimeSlots: ["12:00", "14:00", "16:00", "18:00", "20:00"],
   }
 ];
 
@@ -67,7 +115,8 @@ const SaunaDetails = () => {
   const { toast } = useToast();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   
-  const sauna = saunas.find(s => s.id === id);
+  // Convert numeric id to string for comparison
+  const sauna = saunas.find(s => s.id === (id ? String(id) : id));
   
   if (!sauna) {
     return <div className="container mx-auto p-8">Sauna not found</div>;
