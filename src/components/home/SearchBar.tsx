@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useState } from "react";
@@ -17,6 +16,12 @@ const SearchBar = ({ searchQuery, setSearchQuery }: SearchBarProps) => {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState("1");
+
+  const handleSearch = () => {
+    // For now, we're only implementing the location search
+    // The dates and guests functionality can be added later
+    console.log("Search params:", { checkIn, checkOut, guests });
+  };
 
   return (
     <div className="w-full max-w-6xl mx-auto mb-8">
@@ -80,7 +85,7 @@ const SearchBar = ({ searchQuery, setSearchQuery }: SearchBarProps) => {
           onChange={(e) => setGuests(e.target.value)}
         />
         
-        <Button size="icon" className="rounded-full">
+        <Button size="icon" className="rounded-full" onClick={handleSearch}>
           <Search className="h-4 w-4" />
         </Button>
       </div>
