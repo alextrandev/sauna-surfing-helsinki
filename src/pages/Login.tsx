@@ -6,44 +6,57 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import type { UserRole } from "@/types/auth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { toast } = useToast();
 
   const isValidRole = (role: string): role is UserRole => {
     return role === "user" || role === "renter";
   };
 
   useEffect(() => {
-    // Redirect if user is already logged in
     if (user) {
       navigate(`/dashboard/${user.role}`);
     }
 
-    // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === "SIGNED_IN" && session?.user) {
-          // Fetch the user's profile
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', session.user.id)
-            .single();
+          try {
+            const { data: profile, error } = await supabase
+              .from('profiles')
+              .select('role')
+              .eq('id', session.user.id)
+              .single();
 
-          const role = profile?.role && isValidRole(profile.role) ? profile.role : "user";
+            if (error) throw error;
 
-          // Update local auth state
-          useAuth.getState().setUser({
-            id: session.user.id,
-            email: session.user.email!,
-            name: session.user.user_metadata.username || session.user.email!.split("@")[0],
-            role,
-          });
+            const role = profile?.role && isValidRole(profile.role) ? profile.role : "user";
 
-          // Redirect to dashboard
-          navigate(`/dashboard/${role}`);
+            useAuth.getState().setUser({
+              id: session.user.id,
+              email: session.user.email!,
+              name: session.user.user_metadata.username || session.user.email!.split("@")[0],
+              role,
+            });
+
+            toast({
+              title: "Welcome back!",
+              description: "You have successfully signed in.",
+            });
+
+            navigate(`/dashboard/${role}`);
+          } catch (error) {
+            console.error('Error fetching user profile:', error);
+            toast({
+              title: "Error",
+              description: "There was a problem signing you in. Please try again.",
+              variant: "destructive",
+            });
+          }
         }
       }
     );
@@ -51,7 +64,7 @@ const Login = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [navigate, user]);
+  }, [navigate, user, toast]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -77,7 +90,7 @@ const Login = () => {
               },
             }}
             providers={["google", "github"]}
-            redirectTo={`${window.location.origin}/login`}
+            redirectTo={`${window.location.origin}/auth/callback`}
             onlyThirdPartyProviders={false}
             view="sign_in"
           />
