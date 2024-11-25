@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Sauna } from "./SaunaCard";
 import SaunaCard from "./SaunaCard";
 import { 
-  Pagination, 
-  PaginationContent, 
-  PaginationItem, 
-  PaginationLink, 
-  PaginationNext, 
-  PaginationPrevious 
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from "@/components/ui/pagination";
 
 interface SaunaListProps {
@@ -29,12 +30,11 @@ const SaunaList = ({ saunas, searchQuery }: SaunaListProps) => {
     sauna.type.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Calculate pagination
   const totalPages = Math.ceil(filteredSaunas.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedSaunas = filteredSaunas.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
-  const handleSaunaClick = (id: number) => {
+  const handleSaunaClick = (id: string) => {
     navigate(`/sauna/${id}`);
   };
 
@@ -50,14 +50,13 @@ const SaunaList = ({ saunas, searchQuery }: SaunaListProps) => {
           />
         ))}
       </div>
-      
-      <div className="mt-8">
-        <Pagination>
+      {totalPages > 1 && (
+        <Pagination className="mt-8">
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious 
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
               />
             </PaginationItem>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -73,13 +72,13 @@ const SaunaList = ({ saunas, searchQuery }: SaunaListProps) => {
             ))}
             <PaginationItem>
               <PaginationNext 
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
               />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
-      </div>
+      )}
     </div>
   );
 };

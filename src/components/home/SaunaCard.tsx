@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
 export interface Sauna {
-  id: number;
+  id: string;  // Changed from number to string to match UUID
   title: string;
   location: string;
   price: number;
@@ -19,7 +19,7 @@ export interface Sauna {
 
 interface SaunaCardProps {
   sauna: Sauna;
-  onClick: (id: number) => void;
+  onClick: (id: string) => void;  // Updated to accept string
   index: number;
 }
 
