@@ -17,7 +17,7 @@ const SaunaDetails = () => {
   const { toast } = useToast();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
 
-  const { data: sauna, isLoading } = useQuery({
+  const { data: sauna, isLoading, error } = useQuery({
     queryKey: ['sauna', id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -27,7 +27,7 @@ const SaunaDetails = () => {
           owner:profiles(username)
         `)
         .eq('id', id)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       return data;
@@ -38,8 +38,17 @@ const SaunaDetails = () => {
     return <div className="container mx-auto p-8">Loading...</div>;
   }
 
-  if (!sauna) {
-    return <div className="container mx-auto p-8">Sauna not found</div>;
+  if (error || !sauna) {
+    return (
+      <div className="container mx-auto p-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Sauna Not Found</h2>
+          <p className="text-muted-foreground">
+            The sauna you're looking for doesn't exist or has been removed.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   // Mock data for available time slots - in a real app, this would come from the backend
