@@ -78,6 +78,8 @@ const Login = () => {
             }}
             providers={["google", "github"]}
             redirectTo={`${window.location.origin}/login`}
+            onlyThirdPartyProviders={false}
+            view="sign_in"
           />
         </CardContent>
       </Card>
